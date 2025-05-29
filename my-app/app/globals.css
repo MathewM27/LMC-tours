@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sky-blue: #87ceeb;
+  --sunshine-yellow: #ffd369;
+  --warm-sand: #fce38a;
+  --charcoal-gray: #333333;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-white text-charcoal-gray;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-sky-blue hover:bg-sky-blue/90 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 shadow-md hover:shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-sunshine-yellow hover:bg-sunshine-yellow/90 text-charcoal-gray px-6 py-3 rounded-lg font-medium transition-all duration-300 shadow-md hover:shadow-lg;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden;
+  }
+
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-12 lg:py-20;
+  }
+}
+
+.sky-blue {
+  color: var(--sky-blue);
+}
+
+.sunshine-yellow {
+  color: var(--sunshine-yellow);
+}
+
+.warm-sand {
+  background-color: var(--warm-sand);
+}
+
+.charcoal-gray {
+  color: var(--charcoal-gray);
+}
