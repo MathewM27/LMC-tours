@@ -3,7 +3,14 @@ import { Button } from "@/components/ui/button"
 import { Star, Heart } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
-import TourDetailModal from "./TourDetailModal"
+import dynamic from "next/dynamic"
+
+// Dynamically import the TourDetailModal
+const TourDetailModal = dynamic(() => import("./TourDetailModal"), {
+  ssr: false, // Set to false if it relies on window or other browser-only APIs during render
+  // You can add a loading component here if needed:
+  // loading: () => <p>Loading modal...</p> 
+})
 
 interface Tour {
   id: number;

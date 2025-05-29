@@ -12,6 +12,7 @@ import {
   ChevronRight,
   Car, // Add Car icon
 } from "lucide-react"
+import Image from "next/image" // Import next/image
 
 
 
@@ -108,28 +109,31 @@ export default function HeroSection() {
         <div className="md:col-span-4 h-full grid grid-cols-2 grid-rows-3 gap-3 max-h-[450px] md:max-h-[550px]">
             {/* Image 1: Tall, left (bg1.jpg) */}
             <div className="col-span-1 row-span-2 relative rounded-tl-2xl overflow-hidden shadow-md">
-              <img
+              <Image
                 src="/bg1.jpg"
                 alt="L-shape collage image 1 (tall left)"
-                className="absolute inset-0 w-full h-full object-cover"
+                layout="fill"
+                objectFit="cover"
               />
             </div>
             
             {/* Image 2 (was Image 4): Bottom-left of L-shape (bg2.jpg) */}
             <div className="col-start-1 row-start-3 relative rounded-bl-2xl overflow-hidden shadow-md">
-              <img
+              <Image
                 src="/bg2.jpg" 
                 alt="L-shape collage image 2 (bottom left)"
-                className="absolute inset-0 w-full h-full object-cover"
+                layout="fill"
+                objectFit="cover"
               />
             </div>
 
             {/* Image 3 (was Image 5): Bottom-right of L-shape (bg3.jpg) */}
             <div className="col-start-2 row-start-3 relative rounded-tr-2xl rounded-br-2xl overflow-hidden shadow-md">
-              <img
+              <Image
                 src="/bg5.jpg" 
                 alt="L-shape collage image 3 (bottom right)"
-                className="absolute inset-0 w-full h-full object-cover"
+                layout="fill"
+                objectFit="cover"
               />
             </div>
           </div>

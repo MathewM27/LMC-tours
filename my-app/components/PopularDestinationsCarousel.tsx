@@ -60,7 +60,7 @@ export default function PopularDestinationsCarousel() {
 
   return (
     <section
-      className="relative min-h-[70vh] md:min-h-[80vh] flex flex-col justify-center items-center bg-cover bg-center text-white p-4 sm:p-8 transition-all duration-1000 ease-in-out"
+      className="relative min-h-[40vh] md:min-h-[40vh] flex flex-col justify-center items-center bg-cover bg-center text-white p-4 sm:p-8 transition-all duration-1000 ease-in-out"
       style={{ backgroundImage: `url('/bg1.jpg')` }} // Static blurred background
     >
       <div className="absolute inset-0 bg-black/50 backdrop-blur-md z-0"></div>

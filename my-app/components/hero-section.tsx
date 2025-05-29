@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { ChevronRight, Briefcase, Car, Plane } from "lucide-react"
+import Image from "next/image" // Import next/image
 
 interface Service {
 	id: string
@@ -143,16 +144,20 @@ export default function HeroSection() {
 								key={service.id}
 								className={`relative rounded-xl overflow-hidden shadow-xl cursor-pointer group border-2 transition-all duration-300 ${
 									activeServiceId === service.id
-										? "border-white scale-105"
+										? ""
 										: "border-transparent hover:border-white/50"
 								}`}
 								onClick={() => handleSetService(service.id)}
 							>
-								<img
-									src={service.cardImage}
-									alt={service.cardTitle}
-									className="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110"
-								/>
+								<div className="relative w-full h-40"> {/* Added relative positioning and explicit height */}
+									<Image
+										src={service.cardImage}
+										alt={service.cardTitle}
+										layout="fill"
+										objectFit="cover"
+										className="transition-transform duration-300 group-hover:scale-110"
+									/>
+								</div>
 								<div className="absolute inset-0 bg-black/50 p-4 flex flex-col justify-between">
 									<div>
 										<span className="absolute top-2 right-3 text-5xl font-bold text-white/40">
