@@ -1,15 +1,18 @@
 import HeroSection from "@/components/hero-section"
-import ServicesSection from "@/components/services-section"
 import FeaturedTours from "@/components/featured-tours"
-import QuickBooking from "@/components/quick-booking"
+import CarRentalParallax from "@/components/CarRentalParallax"
+// import CarCatalogueSection from "@/components/CarCatalogueSection"
+import PopularDestinationsCarousel from "@/components/PopularDestinationsCarousel"
 import TestimonialsSection from "@/components/testimonials-section"
 
 export default function HomePage() {
   return (
     <div>
       <HeroSection />
-      {/* <ServicesSection /> */}
       <FeaturedTours />
+      {/* <CarRentalParallax /> */}
+      {/* <CarCatalogueSection /> */}
+      <PopularDestinationsCarousel />
       <TestimonialsSection />
     </div>
   )
