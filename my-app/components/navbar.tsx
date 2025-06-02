@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Menu, X, MapPin, Phone, ChevronDown } from "lucide-react"
+import { Menu, X, TreePalm, Phone, ChevronDown } from "lucide-react" // Changed from MapPin to PalmTree
 import { Button } from "@/components/ui/button"
 
 // Define types for the dropdown items
@@ -82,7 +82,7 @@ export default function Navbar() {
             {/* Left section - Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-2">
-                <MapPin className={`h-6 w-6 transition-colors duration-300 ${isScrolled ? 'text-blue-600' : 'text-sky-400'}`} />
+                <TreePalm className={`h-6 w-6 transition-colors duration-300 ${isScrolled ? 'text-blue-600' : 'text-sky-400'}`} />
                 <span className={`text-lg font-bold transition-colors duration-300 ${isScrolled ? 'text-gray-800' : 'text-white'}`}>LMC Tours</span>
               </Link>
             </div>
@@ -130,7 +130,7 @@ export default function Navbar() {
         {/* Mobile nav bar: always glassmorphic */}
         <div className={`flex lg:hidden justify-between items-center rounded-xl shadow-xl p-3 transition-all duration-300 bg-white/10 backdrop-blur-lg border border-white/20`}>
           <Link href="/" className="flex items-center space-x-2">
-            <MapPin className={`h-6 w-6 transition-colors duration-300 ${isScrolled ? 'text-blue-600' : 'text-sky-400'}`} />
+            <TreePalm className={`h-6 w-6 transition-colors duration-300 ${isScrolled ? 'text-blue-600' : 'text-sky-400'}`} />
             <span className={`text-lg font-bold transition-colors duration-300 ${isScrolled ? 'text-gray-800' : 'text-white'}`}>LMC Tours</span>
           </Link>
           
