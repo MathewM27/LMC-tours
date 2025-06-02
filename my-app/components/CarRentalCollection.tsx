@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Users, Fuel, Settings2, Zap, Car, Filter } from "lucide-react"
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select" // Assuming ShadCN UI Select
 
 type TransmissionType = "All" | "Manual" | "Automatic"
-type CategoryType = "All" | "Economy" | "SUV" | "Compact" | "Premium SUV" | "Luxury" | "Van"
+type CategoryType = "All" | "Economy" | "SUV" | "Compact" | "Premium SUV" | "Luxury" | "Van" | "Sedan"
 type FuelType = "All" | "Petrol" | "Diesel" | "Hybrid" | "Electric"
 
 interface CarRentalItem {
@@ -22,31 +22,109 @@ interface CarRentalItem {
   image: string
   pricePerDay: number
   transmission: "Manual" | "Automatic"
-  category: "Economy" | "SUV" | "Compact" | "Premium SUV" | "Luxury" | "Van"
+  category: "Economy" | "SUV" | "Compact" | "Premium SUV" | "Luxury" | "Van" | "Sedan"
   fuelType: "Petrol" | "Diesel" | "Hybrid" | "Electric"
   seats: number
 }
 
-const baseImagePaths = ["/car2.jpg", "/car3.jpg"];
+const baseImagePaths = ["/lol.jpeg", "/lol1.jpeg", "/lol2.webp", "/lol4.png", "/lol5.png", "/lol7.png", "/lol3.jpeg", "/lol6.jpg"];
 
 const carsData: CarRentalItem[] = [
-  { id: "cr1", name: "Toyota Yaris", image: baseImagePaths[0], pricePerDay: 35, transmission: "Automatic", category: "Compact", fuelType: "Petrol", seats: 5 },
-  { id: "cr2", name: "Kia Sportage", image: baseImagePaths[1], pricePerDay: 55, transmission: "Automatic", category: "SUV", fuelType: "Diesel", seats: 5 },
-  { id: "cr3", name: "Hyundai i10", image: baseImagePaths[0], pricePerDay: 30, transmission: "Manual", category: "Economy", fuelType: "Petrol", seats: 4 },
-  { id: "cr4", name: "BMW X3", image: baseImagePaths[1], pricePerDay: 75, transmission: "Automatic", category: "Premium SUV", fuelType: "Hybrid", seats: 5 },
-  { id: "cr5", name: "Ford Transit", image: baseImagePaths[1], pricePerDay: 60, transmission: "Manual", category: "Van", fuelType: "Diesel", seats: 9 },
-  { id: "cr6", name: "Tesla Model 3", image: baseImagePaths[0], pricePerDay: 90, transmission: "Automatic", category: "Luxury", fuelType: "Electric", seats: 5 },
-  { id: "cr7", name: "Suzuki Swift", image: baseImagePaths[1], pricePerDay: 32, transmission: "Manual", category: "Economy", fuelType: "Petrol", seats: 5 },
-  { id: "cr8", name: "Audi Q5", image: baseImagePaths[0], pricePerDay: 80, transmission: "Automatic", category: "Premium SUV", fuelType: "Hybrid", seats: 5 },
+  { 
+    id: "cr1", 
+    name: "Toyota Yaris", 
+    image: baseImagePaths[0], 
+    pricePerDay: 850, 
+    transmission: "Automatic", 
+    category: "Compact", 
+    fuelType: "Petrol", 
+    seats: 5 
+  },
+  { 
+    id: "cr2", 
+    name: "Kia Picanto", 
+    image: baseImagePaths[1], 
+    pricePerDay: 750, 
+    transmission: "Manual", 
+    category: "Economy", 
+    fuelType: "Petrol", 
+    seats: 4 
+  },
+  { 
+    id: "cr3", 
+    name: "Nissan March", 
+    image: baseImagePaths[2], 
+    pricePerDay: 780, 
+    transmission: "Manual", 
+    category: "Economy", 
+    fuelType: "Petrol", 
+    seats: 5 
+  },
+  { 
+    id: "cr4", 
+    name: "Suzuki Swift", 
+    image: baseImagePaths[3], 
+    pricePerDay: 820, 
+    transmission: "Manual", 
+    category: "Compact", 
+    fuelType: "Petrol", 
+    seats: 5 
+  },
+  { 
+    id: "cr5", 
+    name: "Suzuki S-Presso", 
+    image: baseImagePaths[4], 
+    pricePerDay: 790, 
+    transmission: "Manual", 
+    category: "Economy", 
+    fuelType: "Petrol", 
+    seats: 5 
+  },
+  { 
+    id: "cr6", 
+    name: "Toyota Corolla", 
+    image: baseImagePaths[5], 
+    pricePerDay: 1150, 
+    transmission: "Automatic", 
+    category: "Sedan", 
+    fuelType: "Hybrid", 
+    seats: 5 
+  },
+  { 
+    id: "cr7", 
+    name: "Hyundai i10", 
+    image: baseImagePaths[6], 
+    pricePerDay: 775, 
+    transmission: "Manual", 
+    category: "Economy", 
+    fuelType: "Petrol", 
+    seats: 4 
+  },
+  { 
+    id: "cr8", 
+    name: "Mitsubishi Mirage", 
+    image: baseImagePaths[7], 
+    pricePerDay: 825, 
+    transmission: "Automatic", 
+    category: "Economy", 
+    fuelType: "Petrol", 
+    seats: 5 
+  },
 ]
 
 export default function CarRentalCollection() {
   const [selectedTransmission, setSelectedTransmission] = useState<TransmissionType>("All")
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("All")
   const [selectedFuelType, setSelectedFuelType] = useState<FuelType>("All")
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Set isMounted to true when component is mounted
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const transmissionOptions: TransmissionType[] = ["All", "Manual", "Automatic"]
-  const categoryOptions: CategoryType[] = ["All", "Economy", "SUV", "Compact", "Premium SUV", "Luxury", "Van"]
+  const categoryOptions: CategoryType[] = ["All", "Economy", "SUV", "Compact", "Premium SUV", "Luxury", "Van", "Sedan"]
   const fuelTypeOptions: FuelType[] = ["All", "Petrol", "Diesel", "Hybrid", "Electric"]
 
   const filteredCars = useMemo(() => {
@@ -60,6 +138,43 @@ export default function CarRentalCollection() {
   const getFuelIcon = (fuelType: CarRentalItem["fuelType"]) => {
     if (fuelType === "Hybrid" || fuelType === "Electric") return Zap
     return Fuel
+  }
+
+  if (!isMounted) {
+    // Return a placeholder with the same structure to avoid layout shifts
+    return (
+      <section className="min-h-[80vh] flex flex-col items-center bg-white text-charcoal-gray py-12 sm:py-16 px-4">
+        <div className="w-full max-w-screen-xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3 text-charcoal-gray">
+            Our Car Collection
+          </h2>
+          <p className="text-lg text-gray-600 mb-8 md:mb-10 max-w-2xl mx-auto">
+            Find the perfect vehicle for your Mauritian adventure. Filter by your preferences.
+          </p>
+          
+          {/* Loading state for filter section */}
+          <div className="mb-10 p-6 rounded-xl bg-gray-50 border border-gray-200 shadow-md">
+            <div className="flex items-center mb-4">
+              <Filter className="h-5 w-5 mr-2 text-sky-600" />
+              <h3 className="text-lg font-semibold text-charcoal-gray">Filter Options</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+              {/* Placeholder for filters */}
+              <div className="h-[72px] bg-gray-100 animate-pulse rounded-md"></div>
+              <div className="h-[72px] bg-gray-100 animate-pulse rounded-md"></div>
+              <div className="h-[72px] bg-gray-100 animate-pulse rounded-md"></div>
+            </div>
+          </div>
+          
+          {/* Loading state for car grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-[300px] bg-gray-100 animate-pulse rounded-xl"></div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
   }
 
   return (
@@ -149,7 +264,7 @@ export default function CarRentalCollection() {
 
                     <div className="flex justify-between items-center">
                       <p className="text-xl font-bold text-charcoal-gray">
-                        ${car.pricePerDay}<span className="text-xs font-normal text-gray-500">/day</span>
+                        MUR {car.pricePerDay}<span className="text-xs font-normal text-gray-500">/day</span>
                       </p>
                       <Button size="sm" className="bg-blue-600 rounded-xl hover:bg-sky-700 text-white text-xs px-3 py-1.5">
                         Rent Car

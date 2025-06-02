@@ -11,7 +11,6 @@ export const metadata: Metadata = {
   title: "Mauritius Tours - Discover Paradise",
   description:
     "Your trusted Mauritius touring agent offering travel packages, car rentals, and unforgettable experiences.",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -21,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning>
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />

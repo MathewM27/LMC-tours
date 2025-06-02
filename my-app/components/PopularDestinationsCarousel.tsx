@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useRef, useEffect } from "react"
 import Image from "next/image"
 import { PlayCircle, X } from "lucide-react" // Play and Close icons
 
@@ -47,6 +47,13 @@ const destinationsData: Destination[] = [
 export default function PopularDestinationsCarousel() {
   const [playingVideoId, setPlayingVideoId] = useState<string | null>(null)
   const [showVideoPlayer, setShowVideoPlayer] = useState<boolean>(false)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
+  const [isBrowser, setIsBrowser] = useState(false)
+
+  // Set isBrowser to true once component mounts on client
+  useEffect(() => {
+    setIsBrowser(true)
+  }, [])
 
   const handlePlayVideo = useCallback((videoId: string) => {
     setPlayingVideoId(videoId)
@@ -54,8 +61,14 @@ export default function PopularDestinationsCarousel() {
   }, [])
 
   const handleClosePlayer = useCallback(() => {
-    setPlayingVideoId(null)
+    // Clear iframe src before hiding to stop video
+    if (iframeRef.current) {
+      iframeRef.current.src = ""
+    }
     setShowVideoPlayer(false)
+    setTimeout(() => {
+      setPlayingVideoId(null)
+    }, 300)
   }, [])
 
   return (
@@ -65,11 +78,12 @@ export default function PopularDestinationsCarousel() {
     >
       <div className="absolute inset-0 bg-black/50 backdrop-blur-md z-0"></div>
 
-      {/* Video Player Overlay */}
-      {showVideoPlayer && playingVideoId && (
+      {/* Video Player Overlay - Only render on client */}
+      {isBrowser && showVideoPlayer && playingVideoId && (
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/80 p-4">
           <div className="relative w-full max-w-3xl aspect-video bg-black rounded-lg shadow-2xl">
             <iframe
+              ref={iframeRef}
               width="100%"
               height="100%"
               src={`https://www.youtube.com/embed/${playingVideoId}?autoplay=1&rel=0`}
@@ -100,7 +114,8 @@ export default function PopularDestinationsCarousel() {
           Mauritius Video Gallery
         </h2>
         <p className="text-lg text-white/80 mb-10 md:mb-12 max-w-2xl mx-auto text-shadow-sm">
-          Experience the vibrant beauty and culture of Mauritius through our curated video collection.
+          Experience the vibrant beauty and culture of Mauritius through our
+          curated video collection.
         </p>
 
         {/* Horizontal Scrollable Video Cards */}
@@ -126,7 +141,9 @@ export default function PopularDestinationsCarousel() {
                   <h3 className="text-lg md:text-xl font-semibold text-white text-left">
                     {destination.name}
                   </h3>
-                  <p className="text-xs text-white/70 text-left">{destination.tagline}</p>
+                  <p className="text-xs text-white/70 text-left">
+                    {destination.tagline}
+                  </p>
                 </div>
               </div>
             </div>
@@ -150,10 +167,10 @@ export default function PopularDestinationsCarousel() {
           background: rgba(255, 255, 255, 0.5);
         }
         .text-shadow-md {
-          text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+          text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
         }
         .text-shadow-sm {
-          text-shadow: 0px 1px 3px rgba(0,0,0,0.4);
+          text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
         }
       `}</style>
     </section>

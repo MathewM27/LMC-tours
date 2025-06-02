@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { ChevronRight, Briefcase, Car, Plane } from "lucide-react"
 import Image from "next/image" // Import next/image
@@ -73,21 +73,31 @@ const servicesData: Service[] = [
 const CAROUSEL_INTERVAL = 5000 // 5 seconds
 
 export default function HeroSection() {
-	const [activeServiceId, setActiveServiceId] = useState<string>(
-		servicesData[0].id
-	)
-	const [contentKey, setContentKey] = useState<number>(0) // For re-triggering animations
+	const [activeServiceId, setActiveServiceId] = useState<string>(servicesData[0].id)
+	const [contentKey, setContentKey] = useState<number>(0)
+	const [isMounted, setIsMounted] = useState(false)
+	const timerRef = useRef<NodeJS.Timeout | null>(null)
 
-	const currentService =
-		servicesData.find((s) => s.id === activeServiceId) || servicesData[0]
+	useEffect(() => {
+		setIsMounted(true)
+		return () => {
+			if (timerRef.current) {
+				clearTimeout(timerRef.current)
+			}
+		}
+	}, [])
+
+	const currentService = servicesData.find((s) => s.id === activeServiceId) || servicesData[0]
 
 	const handleSetService = useCallback((id: string) => {
 		setActiveServiceId(id)
-		setContentKey((prev) => prev + 1) // Trigger animation reset
+		setContentKey((prev) => prev + 1)
 	}, [])
 
 	useEffect(() => {
-		const timer = setTimeout(() => {
+		if (!isMounted) return
+
+		timerRef.current = setTimeout(() => {
 			const currentIndex = servicesData.findIndex(
 				(s) => s.id === activeServiceId
 			)
@@ -95,8 +105,12 @@ export default function HeroSection() {
 			handleSetService(servicesData[nextIndex].id)
 		}, CAROUSEL_INTERVAL)
 
-		return () => clearTimeout(timer)
-	}, [activeServiceId, handleSetService])
+		return () => {
+			if (timerRef.current) {
+				clearTimeout(timerRef.current)
+			}
+		}
+	}, [activeServiceId, handleSetService, isMounted])
 
 	return (
 		<section
