@@ -3,25 +3,25 @@ import { Star, Quote } from "lucide-react"
 export default function TestimonialsSection() {
   const testimonials = [
     {
-      name: "Sarah Johnson",
+      name: "Micheal Smith",
       location: "London, UK",
       rating: 5,
       text: "Absolutely incredible experience! The tour guide was knowledgeable and the destinations were breathtaking. Mauritius Tours made our honeymoon unforgettable.",
-      avatar: "/placeholder.svg?height=60&width=60",
+      avatar: "/profile.png",
     },
     {
-      name: "Michael Chen",
+      name: "Sarah Johnson",
       location: "Sydney, Australia",
       rating: 5,
       text: "Professional service from start to finish. The car rental was seamless and the vehicle was in perfect condition. Highly recommend for anyone visiting Mauritius.",
-      avatar: "/placeholder.svg?height=60&width=60",
+      avatar: "/profile2.png",
     },
     {
       name: "Emma Rodriguez",
       location: "Madrid, Spain",
       rating: 5,
       text: "The underwater sea walk was a once-in-a-lifetime experience. The team was professional and made us feel safe throughout the entire adventure.",
-      avatar: "/placeholder.svg?height=60&width=60",
+      avatar: "/profile1.png",
     },
   ]
 
